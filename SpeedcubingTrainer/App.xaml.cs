@@ -1,10 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
+using SpeedcubingTrainer.Services;
+using SpeedcubingTrainer.ViewModels;
 using Uno.Resizetizer;
 
 namespace SpeedcubingTrainer;
 
 public partial class App : Application
 {
+    private static IServiceProvider? _services;
+
+    /// <summary>Application-wide services, available once the host is built in OnLaunched.</summary>
+    public static IServiceProvider Services => _services ?? throw new InvalidOperationException("The application host has not been built yet.");
+
     /// <summary>
     /// Initializes the singleton application object. This is the first line of authored code
     /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -15,6 +22,9 @@ public partial class App : Application
     }
 
     protected Window? MainWindow { get; private set; }
+
+    /// <summary>The main window, for platform APIs that must be initialised with a window handle.</summary>
+    public static Window? MainWindowInstance { get; private set; }
     protected IHost? Host { get; private set; }
 
     [SuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "Uno.Extensions APIs are used in a way that is safe for trimming in this template context.")]
@@ -28,11 +38,17 @@ public partial class App : Application
 #endif
                 .ConfigureServices((context, services) =>
                 {
-                    // TODO: Register your services
-                    //services.AddSingleton<IMyService, MyService>();
+                    services.AddSingleton<AppDataService>();
+                    services.AddSingleton<RepositoryProvider>();
+                    services.AddSingleton<SettingsService>();
+                    services.AddSingleton<ScrambleService>();
+                    services.AddSingleton<TimerViewModel>();
+                    services.AddSingleton<SessionsViewModel>();
+                    services.AddSingleton<SettingsViewModel>();
                 })
             );
         MainWindow = builder.Window;
+        MainWindowInstance = MainWindow;
 
         #if DEBUG
         MainWindow.UseStudio();
@@ -40,6 +56,7 @@ public partial class App : Application
                 MainWindow.SetWindowIcon();
 
         Host = builder.Build();
+        _services = Host.Services;
 
         // Do not repeat app initialization when the Window already has content,
         // just ensure that the window is active
