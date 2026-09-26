@@ -31,5 +31,7 @@ jobs:
           global-json-file: global.json
           dotnet-version: 10.0.x
       - name: Install the workloads the project needs (android, ios, wasm-tools)
-        run: dotnet workload restore SpeedcubingTrainer/SpeedcubingTrainer.csproj
+        run: |
+          dotnet workload install wasm-tools
+          dotnet workload restore SpeedcubingTrainer/SpeedcubingTrainer.csproj
       - run: dotnet build SpeedcubingTrainer/SpeedcubingTrainer.csproj -f ${{ matrix.tfm }} -c Release --nologo
