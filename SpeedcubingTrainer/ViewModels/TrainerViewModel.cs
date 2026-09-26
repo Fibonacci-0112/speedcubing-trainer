@@ -35,6 +35,16 @@ public enum DrillPhase
 
 public sealed record QuizChoice(string Text, bool IsCorrect);
 
+public sealed record PoolFilterItem(PoolFilter Filter, string Name)
+{
+    public override string ToString() => Name;
+}
+
+public sealed record TrainerModeItem(TrainerMode Mode, string Name)
+{
+    public override string ToString() => Name;
+}
+
 public sealed partial class TrainerViewModel : ObservableObject
 {
     private readonly RepositoryProvider _repositories;
@@ -56,9 +66,33 @@ public sealed partial class TrainerViewModel : ObservableObject
         _ = ReloadAsync();
     }
 
-    public IReadOnlyList<TrainerMode> Modes { get; } = Enum.GetValues<TrainerMode>();
+    public IReadOnlyList<TrainerModeItem> Modes { get; } =
+    [
+        new(TrainerMode.Drill, "Drill"),
+        new(TrainerMode.Memorize, "Memorize"),
+        new(TrainerMode.Quiz, "Recognition quiz"),
+    ];
 
-    public IReadOnlyList<PoolFilter> PoolFilters { get; } = Enum.GetValues<PoolFilter>();
+    public IReadOnlyList<PoolFilterItem> PoolFilters { get; } =
+    [
+        new(PoolFilter.Learning, "Learning"),
+        new(PoolFilter.LearningAndLearned, "Learning and learned"),
+        new(PoolFilter.Favorites, "Favorites"),
+        new(PoolFilter.Weakest, "10 slowest"),
+        new(PoolFilter.All, "All cases"),
+    ];
+
+    public TrainerModeItem SelectedMode
+    {
+        get => Modes.First(m => m.Mode == Mode);
+        set => Mode = value?.Mode ?? TrainerMode.Drill;
+    }
+
+    public PoolFilterItem SelectedPool
+    {
+        get => PoolFilters.First(p => p.Filter == Pool);
+        set => Pool = value?.Filter ?? PoolFilter.LearningAndLearned;
+    }
 
     [ObservableProperty]
     public partial TrainerMode Mode { get; set; } = TrainerMode.Drill;
@@ -146,6 +180,7 @@ public sealed partial class TrainerViewModel : ObservableObject
 
     partial void OnModeChanged(TrainerMode value)
     {
+        OnPropertyChanged(nameof(SelectedMode));
         OnPropertyChanged(nameof(IsDrill));
         OnPropertyChanged(nameof(IsMemorize));
         OnPropertyChanged(nameof(IsQuiz));
@@ -159,7 +194,11 @@ public sealed partial class TrainerViewModel : ObservableObject
 
     partial void OnIncludePllChanged(bool value) => _ = ReloadAsync();
 
-    partial void OnPoolChanged(PoolFilter value) => _ = ReloadAsync();
+    partial void OnPoolChanged(PoolFilter value)
+    {
+        OnPropertyChanged(nameof(SelectedPool));
+        _ = ReloadAsync();
+    }
 
     partial void OnCurrentCaseChanged(AlgCase? value) => OnPropertyChanged(nameof(HasCase));
 

@@ -16,7 +16,7 @@ public sealed partial class AlgorithmsPage : Page
 
     public AlgorithmsViewModel ViewModel { get; }
 
-    private async void OnCaseClick(object sender, RoutedEventArgs e)
+    private async void OnCaseTapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
     {
         if ((sender as FrameworkElement)?.DataContext is not CaseCardViewModel card)
         {

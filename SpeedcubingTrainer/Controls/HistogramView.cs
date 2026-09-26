@@ -60,7 +60,8 @@ public sealed partial class HistogramView : UserControl
             _canvas.Children.Add(bar);
             if (i % Math.Max(1, binCount / 5) == 0)
             {
-                var label = new TextBlock { Text = TimeFormat.Format((int)(min + i * binWidthMs), showHundredths: false), FontSize = 10, Opacity = 0.7 };
+                var startMs = min + i * binWidthMs;
+                var label = new TextBlock { Text = startMs < 60000 ? (startMs / 1000).ToString("0.0") : TimeFormat.Format((int)startMs, showHundredths: false), FontSize = 10, Opacity = 0.7 };
                 Canvas.SetLeft(label, i * barWidth + 2);
                 Canvas.SetTop(label, height - bottom + 2);
                 _canvas.Children.Add(label);

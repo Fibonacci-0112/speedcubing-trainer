@@ -81,7 +81,7 @@ public sealed partial class TrendChartView : UserControl
             var ms = min + (max - min) * k / 4;
             var y = Y(ms);
             _canvas.Children.Add(new Line { X1 = left, X2 = width - 8, Y1 = y, Y2 = y, Stroke = CubeColors.Brush(AxisColor), StrokeThickness = 1 });
-            var label = new TextBlock { Text = TimeFormat.Format((int)ms, showHundredths: false), FontSize = 10, Opacity = 0.7 };
+            var label = new TextBlock { Text = AxisLabel(ms), FontSize = 10, Opacity = 0.7 };
             Canvas.SetLeft(label, 0);
             Canvas.SetTop(label, y - 7);
             _canvas.Children.Add(label);
@@ -104,6 +104,8 @@ public sealed partial class TrendChartView : UserControl
         Canvas.SetTop(legend, height - bottom + 2);
         _canvas.Children.Add(legend);
     }
+
+    private static string AxisLabel(double ms) => ms < 60000 ? (ms / 1000).ToString("0.0") : TimeFormat.Format((int)ms, showHundredths: false);
 
     private void AddSeries(int?[] series, Color color, double thickness, Func<int, double> x, Func<double, double> y, bool dots)
     {

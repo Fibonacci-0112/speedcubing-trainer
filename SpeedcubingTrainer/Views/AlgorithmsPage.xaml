@@ -32,11 +32,11 @@
               </StackPanel>
               <muxc:ItemsRepeater ItemsSource="{x:Bind Cases}">
                 <muxc:ItemsRepeater.Layout>
-                  <muxc:UniformGridLayout MinItemWidth="230" MinItemHeight="200" MinRowSpacing="8" MinColumnSpacing="8" ItemsStretch="Fill" />
+                  <muxc:UniformGridLayout MinItemWidth="250" MinItemHeight="128" MinRowSpacing="8" MinColumnSpacing="8" ItemsStretch="Fill" />
                 </muxc:ItemsRepeater.Layout>
                 <muxc:ItemsRepeater.ItemTemplate>
                   <DataTemplate x:DataType="vm:CaseCardViewModel">
-                    <Button Padding="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Background="{ThemeResource SurfaceVariantBrush}" CornerRadius="10" Click="OnCaseClick" BorderThickness="0">
+                    <Border Background="{ThemeResource SurfaceVariantBrush}" CornerRadius="10" Tapped="OnCaseTapped">
                       <Grid Padding="12" ColumnSpacing="12">
                         <Grid.ColumnDefinitions>
                           <ColumnDefinition Width="Auto" />
@@ -55,7 +55,7 @@
                           <TextBlock Text="{x:Bind DrillSummary, Mode=OneWay}" FontSize="11" Opacity="0.6" TextWrapping="Wrap" />
                         </StackPanel>
                       </Grid>
-                    </Button>
+                    </Border>
                   </DataTemplate>
                 </muxc:ItemsRepeater.ItemTemplate>
               </muxc:ItemsRepeater>

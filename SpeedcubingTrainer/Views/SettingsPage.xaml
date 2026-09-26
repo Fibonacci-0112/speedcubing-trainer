@@ -7,22 +7,31 @@
       <TextBlock Text="Settings" Style="{StaticResource HeadlineMedium}" />
 
       <TextBlock Text="Timer" Style="{StaticResource TitleMedium}" />
-      <ToggleSwitch Header="WCA inspection (15 s, +2 after 15 s, DNF after 17 s)" IsOn="{x:Bind ViewModel.Settings.InspectionEnabled, Mode=TwoWay}" />
-      <Slider Header="Hold to start (seconds)" Minimum="0" Maximum="1" StepFrequency="0.1" Value="{x:Bind ViewModel.HoldToStartSeconds, Mode=TwoWay}" />
-      <Slider Header="Timer font size" Minimum="40" Maximum="200" StepFrequency="4" Value="{x:Bind ViewModel.TimerFontSize, Mode=TwoWay}" />
-      <ToggleSwitch Header="Show scramble preview" IsOn="{x:Bind ViewModel.Settings.ShowScramblePreview, Mode=TwoWay}" />
-      <ToggleSwitch Header="Ask before deleting a solve" IsOn="{x:Bind ViewModel.Settings.ConfirmDelete, Mode=TwoWay}" />
+      <TextBlock Text="WCA inspection (15 s, +2 after 15 s, DNF after 17 s)" Margin="0,4,0,-8" />
+      <ToggleSwitch OffContent="Off" OnContent="On" IsOn="{x:Bind ViewModel.Settings.InspectionEnabled, Mode=TwoWay}" />
+      <TextBlock Text="Hold to start (seconds)" Margin="0,4,0,-8" />
+      <Slider Minimum="0" Maximum="1" StepFrequency="0.1" Value="{x:Bind ViewModel.HoldToStartSeconds, Mode=TwoWay}" />
+      <TextBlock Text="Timer font size" Margin="0,4,0,-8" />
+      <Slider Minimum="40" Maximum="200" StepFrequency="4" Value="{x:Bind ViewModel.TimerFontSize, Mode=TwoWay}" />
+      <TextBlock Text="Show scramble preview" Margin="0,4,0,-8" />
+      <ToggleSwitch OffContent="Off" OnContent="On" IsOn="{x:Bind ViewModel.Settings.ShowScramblePreview, Mode=TwoWay}" />
+      <TextBlock Text="Ask before deleting a solve" Margin="0,4,0,-8" />
+      <ToggleSwitch OffContent="Off" OnContent="On" IsOn="{x:Bind ViewModel.Settings.ConfirmDelete, Mode=TwoWay}" />
 
       <TextBlock Text="Scrambles" Style="{StaticResource TitleMedium}" />
-      <ToggleSwitch Header="Random-state scrambles (WCA style)" OffContent="Random moves" OnContent="Random state" IsOn="{x:Bind ViewModel.UseRandomState, Mode=TwoWay}" />
+      <TextBlock Text="Scramble type" Margin="0,4,0,-8" />
+      <ToggleSwitch OffContent="Random moves" OnContent="Random state" IsOn="{x:Bind ViewModel.UseRandomState, Mode=TwoWay}" />
       <TextBlock Text="{x:Bind ViewModel.SolverInfo, Mode=OneWay}" Opacity="0.7" />
-      <ToggleSwitch Header="Write wide moves in lowercase (r instead of Rw)" IsOn="{x:Bind ViewModel.UseLowercaseWide, Mode=TwoWay}" />
+      <TextBlock Text="Write wide moves in lowercase (r instead of Rw)" Margin="0,4,0,-8" />
+      <ToggleSwitch OffContent="Rw" OnContent="r" IsOn="{x:Bind ViewModel.UseLowercaseWide, Mode=TwoWay}" />
 
       <TextBlock Text="Trainer" Style="{StaticResource TitleMedium}" />
-      <Slider Header="New algorithm cases introduced per day" Minimum="1" Maximum="30" StepFrequency="1" Value="{x:Bind ViewModel.NewCasesPerDay, Mode=TwoWay}" />
+      <TextBlock Text="New algorithm cases introduced per day" Margin="0,4,0,-8" />
+      <Slider Minimum="1" Maximum="30" StepFrequency="1" Value="{x:Bind ViewModel.NewCasesPerDay, Mode=TwoWay}" />
 
       <TextBlock Text="Appearance" Style="{StaticResource TitleMedium}" />
-      <ComboBox x:Name="ThemeBox" Header="Theme" SelectionChanged="OnThemeChanged">
+      <TextBlock Text="Theme" Margin="0,4,0,-8" />
+      <ComboBox x:Name="ThemeBox" SelectedIndex="0" SelectionChanged="OnThemeChanged" MinWidth="200">
         <ComboBoxItem Content="System" />
         <ComboBoxItem Content="Light" />
         <ComboBoxItem Content="Dark" />
@@ -30,7 +39,7 @@
 
       <TextBlock Text="About" Style="{StaticResource TitleMedium}" />
       <TextBlock TextWrapping="Wrap" Opacity="0.8"
-                 Text="Speedcubing Trainer stores everything on this device. Use Sessions → Export to back up your solves. Random-state scrambles are produced by a built-in two-phase solver." />
+                 Text="Speedcubing Trainer stores everything on this device. Use Export JSON on the Sessions page to back up your solves. Random-state scrambles are produced by a built-in two-phase solver." />
     </StackPanel>
   </ScrollViewer>
 </Page>
