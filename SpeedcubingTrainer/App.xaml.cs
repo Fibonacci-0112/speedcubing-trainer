@@ -45,6 +45,8 @@ public partial class App : Application
                     services.AddSingleton<TimerViewModel>();
                     services.AddSingleton<SessionsViewModel>();
                     services.AddSingleton<SettingsViewModel>();
+                    services.AddSingleton<AlgorithmsViewModel>();
+                    services.AddSingleton<TrainerViewModel>();
                 })
             );
         MainWindow = builder.Window;
