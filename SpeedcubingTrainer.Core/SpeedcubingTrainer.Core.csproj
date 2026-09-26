@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>SpeedcubingTrainer.Core</RootNamespace>
+    <IsTrimmable>true</IsTrimmable>
+    <IsAotCompatible>true</IsAotCompatible>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="SpeedcubingTrainer.Core.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Algorithms/Data/*.json" LogicalName="algsets/%(Filename)%(Extension)" />
+  </ItemGroup>
+
+</Project>

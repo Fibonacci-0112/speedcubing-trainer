@@ -1,0 +1,88 @@
+<Page x:Class="SpeedcubingTrainer.Views.TimerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:SpeedcubingTrainer.Views"
+      xmlns:vm="using:SpeedcubingTrainer.ViewModels"
+      xmlns:controls="using:SpeedcubingTrainer.Controls"
+      xmlns:utu="using:Uno.Toolkit.UI"
+      Background="{ThemeResource BackgroundBrush}">
+  <Grid x:Name="Root" Background="Transparent">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <!-- Scramble -->
+    <StackPanel Grid.Row="0" Padding="16,12" Spacing="4">
+      <TextBlock Text="{x:Bind ViewModel.ScrambleText, Mode=OneWay}"
+                 TextWrapping="Wrap"
+                 TextAlignment="Center"
+                 FontSize="22"
+                 IsTextSelectionEnabled="True"
+                 Visibility="{x:Bind local:TimerPage.Collapse(ViewModel.IsTiming), Mode=OneWay}" />
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="12"
+                  Visibility="{x:Bind local:TimerPage.Collapse(ViewModel.IsTiming), Mode=OneWay}">
+        <TextBlock Text="{x:Bind ViewModel.ScrambleKindLabel, Mode=OneWay}" Style="{StaticResource LabelSmall}" Opacity="0.7" />
+        <TextBlock Text="{x:Bind ViewModel.SolverStatus, Mode=OneWay}" Style="{StaticResource LabelSmall}" Opacity="0.7" />
+        <HyperlinkButton Content="new scramble" Command="{x:Bind ViewModel.NewScrambleCommand}" Padding="4,0" FontSize="12" IsTabStop="False" />
+      </StackPanel>
+    </StackPanel>
+
+    <!-- Timer surface: press and hold anywhere here -->
+    <Grid x:Name="TimerSurface" Grid.Row="1" Background="Transparent"
+          PointerPressed="OnSurfacePressed" PointerReleased="OnSurfaceReleased"
+          PointerCanceled="OnSurfaceReleased" PointerCaptureLost="OnSurfaceReleased">
+      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
+        <TextBlock x:Name="TimeText"
+                   Text="{x:Bind ViewModel.Display, Mode=OneWay}"
+                   FontSize="{x:Bind ViewModel.TimerFontSize, Mode=OneWay}"
+                   FontWeight="Light"
+                   TextAlignment="Center"
+                   Foreground="{x:Bind local:TimerPage.BrushFor(ViewModel.Visual), Mode=OneWay}" />
+        <TextBlock Text="{x:Bind ViewModel.LastSolveText, Mode=OneWay}" TextAlignment="Center" Opacity="0.7"
+                   Visibility="{x:Bind local:TimerPage.Collapse(ViewModel.IsTiming), Mode=OneWay}" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8"
+                    Visibility="{x:Bind local:TimerPage.ShowIf(ViewModel.HasLastSolve, ViewModel.IsTiming), Mode=OneWay}">
+          <ToggleButton Content="+2" IsChecked="{x:Bind ViewModel.IsLastPlus2, Mode=OneWay}" Command="{x:Bind ViewModel.TogglePlus2Command}" IsTabStop="False" />
+          <ToggleButton Content="DNF" IsChecked="{x:Bind ViewModel.IsLastDnf, Mode=OneWay}" Command="{x:Bind ViewModel.ToggleDnfCommand}" IsTabStop="False" />
+          <Button Content="Delete" Command="{x:Bind ViewModel.DeleteLastCommand}" IsTabStop="False" />
+        </StackPanel>
+        <TextBlock Text="Hold space or press and hold here, release to start" TextAlignment="Center" Opacity="0.5" FontSize="12"
+                   Visibility="{x:Bind local:TimerPage.Collapse(ViewModel.IsTiming), Mode=OneWay}" />
+      </StackPanel>
+    </Grid>
+
+    <!-- Preview and stats -->
+    <Grid Grid.Row="2" Padding="16,8,16,16" ColumnSpacing="16"
+          Visibility="{x:Bind local:TimerPage.Collapse(ViewModel.IsTiming), Mode=OneWay}">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <controls:CubeNetView Grid.Column="0" State="{x:Bind ViewModel.PreviewState, Mode=OneWay}" StickerSize="12"
+                            VerticalAlignment="Bottom"
+                            Visibility="{x:Bind local:TimerPage.Show(ViewModel.ShowPreview), Mode=OneWay}" />
+      <StackPanel Grid.Column="1" VerticalAlignment="Bottom" Spacing="2">
+        <TextBlock Text="{x:Bind ViewModel.SessionName, Mode=OneWay}" Style="{StaticResource TitleSmall}" />
+        <TextBlock Text="{x:Bind ViewModel.SessionSummaryText, Mode=OneWay}" Opacity="0.7" FontSize="12" />
+        <ItemsControl ItemsSource="{x:Bind ViewModel.Stats, Mode=OneWay}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <utu:AutoLayout Orientation="Horizontal" Spacing="16" Justify="Stack" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:StatRow">
+              <StackPanel MinWidth="56">
+                <TextBlock Text="{x:Bind Label}" Opacity="0.6" FontSize="11" />
+                <TextBlock Text="{x:Bind Current}" FontSize="16" />
+                <TextBlock Text="{x:Bind Best}" Opacity="0.7" FontSize="12" />
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Grid>
+  </Grid>
+</Page>

@@ -1,0 +1,31 @@
+{
+  "set": "PLL",
+  "schemaVersion": 1,
+  "view": "TopWithSides",
+  "colorMode": "Full",
+  "setup": { "preAuf": true, "postAuf": true, "yRotation": true },
+  "groups": ["Edges only", "Corners only", "Adjacent corner swap", "Diagonal corner swap"],
+  "cases": [
+    { "id": "PLL-Ua", "number": 1, "name": "Ua", "group": "Edges only", "algorithms": ["M2 U M U2 M' U M2", "R U' R U R U R U' R' U' R2"], "recognition": "Three edges cycle counter-clockwise; one solved bar.", "probability": "1/18" },
+    { "id": "PLL-Ub", "number": 2, "name": "Ub", "group": "Edges only", "algorithms": ["M2 U' M U2 M' U' M2", "R2 U R U R' U' R' U' R' U R'"], "recognition": "Three edges cycle clockwise; one solved bar.", "probability": "1/18" },
+    { "id": "PLL-H", "number": 3, "name": "H", "group": "Edges only", "algorithms": ["M2 U M2 U2 M2 U M2"], "recognition": "Opposite edges swapped on every side.", "probability": "1/72" },
+    { "id": "PLL-Z", "number": 4, "name": "Z", "group": "Edges only", "algorithms": ["M' U M2 U M2 U M' U2 M2", "M2 U M2 U M' U2 M2 U2 M'"], "recognition": "Adjacent edges swapped in pairs.", "probability": "1/36" },
+    { "id": "PLL-Aa", "number": 5, "name": "Aa", "group": "Corners only", "algorithms": ["x R' U R' D2 R U' R' D2 R2 x'", "l' U R' D2 R U' R' D2 R2"], "recognition": "Headlights on the left, three-corner cycle.", "probability": "1/18" },
+    { "id": "PLL-Ab", "number": 6, "name": "Ab", "group": "Corners only", "algorithms": ["x R2 D2 R U R' D2 R U' R x'", "l U' R D2 R' U R D2 R2"], "recognition": "Headlights on the right, three-corner cycle.", "probability": "1/18" },
+    { "id": "PLL-E", "number": 7, "name": "E", "group": "Corners only", "algorithms": ["x' R U' R' D R U R' D' R U R' D R U' R' D' x"], "recognition": "No bars anywhere; every corner adjacent-swapped.", "probability": "1/36" },
+    { "id": "PLL-T", "number": 8, "name": "T", "group": "Adjacent corner swap", "algorithms": ["R U R' U' R' F R2 U' R' U' R U R' F'"], "recognition": "Headlights on the left, bar on the right.", "probability": "1/18" },
+    { "id": "PLL-F", "number": 9, "name": "F", "group": "Adjacent corner swap", "algorithms": ["R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R"], "recognition": "One solved bar, three-edge cycle with a corner swap.", "probability": "1/18" },
+    { "id": "PLL-Ja", "number": 10, "name": "Ja", "group": "Adjacent corner swap", "algorithms": ["x R2 F R F' R U2 r' U r U2 x'", "R' U L' U2 R U' R' U2 R L"], "recognition": "Solved block of three in the back-left; bar on the front.", "probability": "1/18" },
+    { "id": "PLL-Jb", "number": 11, "name": "Jb", "group": "Adjacent corner swap", "algorithms": ["R U R' F' R U R' U' R' F R2 U' R'"], "recognition": "Solved block of three on the right; bar in the back.", "probability": "1/18" },
+    { "id": "PLL-Ra", "number": 12, "name": "Ra", "group": "Adjacent corner swap", "algorithms": ["R U' R' U' R U R D R' U' R D' R' U2 R'", "R U R' F' R U2 R' U2 R' F R U R U2 R'"], "recognition": "Bar on the left, headlights in the back.", "probability": "1/18" },
+    { "id": "PLL-Rb", "number": 13, "name": "Rb", "group": "Adjacent corner swap", "algorithms": ["R' U2 R U2 R' F R U R' U' R' F' R2"], "recognition": "Bar on the right, headlights in the back.", "probability": "1/18" },
+    { "id": "PLL-Ga", "number": 14, "name": "Ga", "group": "Adjacent corner swap", "algorithms": ["R2 U R' U R' U' R U' R2 U' D R' U R D'"], "recognition": "Headlights on the left; edge cycle.", "probability": "1/18" },
+    { "id": "PLL-Gb", "number": 15, "name": "Gb", "group": "Adjacent corner swap", "algorithms": ["R' U' R U D' R2 U R' U R U' R U' R2 D"], "recognition": "Headlights on the left with the matching edge.", "probability": "1/18" },
+    { "id": "PLL-Gc", "number": 16, "name": "Gc", "group": "Adjacent corner swap", "algorithms": ["R2 U' R U' R U R' U R2 U D' R U' R' D"], "recognition": "Headlights on the right; edge cycle.", "probability": "1/18" },
+    { "id": "PLL-Gd", "number": 17, "name": "Gd", "group": "Adjacent corner swap", "algorithms": ["R U R' U' D R2 U' R U' R' U R' U R2 D'"], "recognition": "Headlights on the right with the matching edge.", "probability": "1/18" },
+    { "id": "PLL-V", "number": 18, "name": "V", "group": "Diagonal corner swap", "algorithms": ["R' U R' U' y R' F' R2 U' R' U R' F R F", "R' U R' d' R' F' R2 U' R' U R' F R F"], "recognition": "Diagonal corners swapped; two-colour block in the back-left.", "probability": "1/18" },
+    { "id": "PLL-Y", "number": 19, "name": "Y", "group": "Diagonal corner swap", "algorithms": ["F R U' R' U' R U R' F' R U R' U' R' F R F'"], "recognition": "Diagonal corners swapped; small block front-left.", "probability": "1/18" },
+    { "id": "PLL-Na", "number": 20, "name": "Na", "group": "Diagonal corner swap", "algorithms": ["R U R' U R U R' F' R U R' U' R' F R2 U' R' U2 R U' R'", "L U' R U2 L' U R' L U' R U2 L' U R'"], "recognition": "Two bars, diagonal from each other, on the left side.", "probability": "1/72" },
+    { "id": "PLL-Nb", "number": 21, "name": "Nb", "group": "Diagonal corner swap", "algorithms": ["R' U R U' R' F' U' F R U R' F R' F' R U' R", "R' U L' U2 R U' L R' U L' U2 R U' L"], "recognition": "Two bars, diagonal from each other, on the right side.", "probability": "1/72" }
+  ]
+}
