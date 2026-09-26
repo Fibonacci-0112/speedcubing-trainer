@@ -73,8 +73,16 @@ public sealed partial class AlgorithmsPage : Page
                 await ViewModel.SetStatusAsync(card, (LearningStatus)statusBox.SelectedIndex);
             }
         };
-        var favorite = new ToggleButton { Content = "★ Favorite", IsChecked = card.IsFavorite, VerticalAlignment = VerticalAlignment.Bottom };
-        favorite.Click += async (_, _) => await ViewModel.ToggleFavoriteAsync(card);
+        var favoriteContent = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 6 };
+        var favoriteIcon = new FontIcon { Glyph = card.FavoriteGlyph, FontSize = 14 };
+        favoriteContent.Children.Add(favoriteIcon);
+        favoriteContent.Children.Add(new TextBlock { Text = "Favorite" });
+        var favorite = new ToggleButton { Content = favoriteContent, IsChecked = card.IsFavorite, VerticalAlignment = VerticalAlignment.Bottom };
+        favorite.Click += async (_, _) =>
+        {
+            await ViewModel.ToggleFavoriteAsync(card);
+            favoriteIcon.Glyph = card.FavoriteGlyph;
+        };
         var row = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8 };
         row.Children.Add(statusBox);
         row.Children.Add(favorite);

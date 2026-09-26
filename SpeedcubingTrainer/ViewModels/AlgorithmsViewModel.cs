@@ -40,7 +40,8 @@ public sealed partial class CaseCardViewModel(AlgCase algCase, CaseProgressRecor
 
     public bool IsFavorite => Progress.Favorite;
 
-    public string FavoriteGlyph => IsFavorite ? "★" : "☆";
+    /// <summary>Segoe Fluent / Uno Fluent Assets star glyphs (filled and outline).</summary>
+    public string FavoriteGlyph => IsFavorite ? "\uE735" : "\uE734";
 
     public string DrillSummary => Progress.DrillAttempts == 0
         ? "No drills yet"

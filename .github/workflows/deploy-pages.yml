@@ -23,7 +23,8 @@ jobs:
         with:
           global-json-file: global.json
           dotnet-version: 10.0.x
-      - run: dotnet workload install wasm-tools
+      - name: Install the workloads the project needs
+        run: dotnet workload restore SpeedcubingTrainer/SpeedcubingTrainer.csproj
       - name: Publish WebAssembly head
         run: >
           dotnet publish SpeedcubingTrainer/SpeedcubingTrainer.csproj

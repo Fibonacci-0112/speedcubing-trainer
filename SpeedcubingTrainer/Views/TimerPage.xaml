@@ -25,7 +25,7 @@
                   Visibility="{x:Bind local:TimerPage.Collapse(ViewModel.IsTiming), Mode=OneWay}">
         <TextBlock Text="{x:Bind ViewModel.ScrambleKindLabel, Mode=OneWay}" Style="{StaticResource LabelSmall}" Opacity="0.7" />
         <TextBlock Text="{x:Bind ViewModel.SolverStatus, Mode=OneWay}" Style="{StaticResource LabelSmall}" Opacity="0.7" />
-        <HyperlinkButton Content="new scramble" Command="{x:Bind ViewModel.NewScrambleCommand}" Padding="4,0" FontSize="12" />
+        <HyperlinkButton Content="new scramble" Command="{x:Bind ViewModel.NewScrambleCommand}" Padding="4,0" FontSize="12" IsTabStop="False" />
       </StackPanel>
     </StackPanel>
 
@@ -44,9 +44,9 @@
                    Visibility="{x:Bind local:TimerPage.Collapse(ViewModel.IsTiming), Mode=OneWay}" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8"
                     Visibility="{x:Bind local:TimerPage.ShowIf(ViewModel.HasLastSolve, ViewModel.IsTiming), Mode=OneWay}">
-          <ToggleButton Content="+2" IsChecked="{x:Bind ViewModel.IsLastPlus2, Mode=OneWay}" Command="{x:Bind ViewModel.TogglePlus2Command}" />
-          <ToggleButton Content="DNF" IsChecked="{x:Bind ViewModel.IsLastDnf, Mode=OneWay}" Command="{x:Bind ViewModel.ToggleDnfCommand}" />
-          <Button Content="Delete" Command="{x:Bind ViewModel.DeleteLastCommand}" />
+          <ToggleButton Content="+2" IsChecked="{x:Bind ViewModel.IsLastPlus2, Mode=OneWay}" Command="{x:Bind ViewModel.TogglePlus2Command}" IsTabStop="False" />
+          <ToggleButton Content="DNF" IsChecked="{x:Bind ViewModel.IsLastDnf, Mode=OneWay}" Command="{x:Bind ViewModel.ToggleDnfCommand}" IsTabStop="False" />
+          <Button Content="Delete" Command="{x:Bind ViewModel.DeleteLastCommand}" IsTabStop="False" />
         </StackPanel>
         <TextBlock Text="Hold space or press and hold here, release to start" TextAlignment="Center" Opacity="0.5" FontSize="12"
                    Visibility="{x:Bind local:TimerPage.Collapse(ViewModel.IsTiming), Mode=OneWay}" />

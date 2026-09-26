@@ -10,11 +10,20 @@ public sealed partial class TrainerPage : Page
 
     public TrainerPage()
     {
+        _keyDownHandler = new KeyEventHandler(OnKeyDown);
         ViewModel = App.Services.GetRequiredService<TrainerViewModel>();
         this.InitializeComponent();
         IsTabStop = true;
         UseSystemFocusVisuals = false;
         _tick.Tick += (_, _) => ViewModel.DrillTick();
+        ViewModel.PropertyChanged += (_, e) =>
+        {
+            // Take the keyboard back from whatever control was clicked once a case is on screen.
+            if (e.PropertyName is nameof(TrainerViewModel.CurrentCase) or nameof(TrainerViewModel.Mode))
+            {
+                Focus(FocusState.Programmatic);
+            }
+        };
         Loaded += OnLoaded;
         Unloaded += OnUnloaded;
     }
@@ -32,7 +41,7 @@ public sealed partial class TrainerPage : Page
         _tick.Start();
         if (XamlRoot?.Content is UIElement root)
         {
-            root.KeyDown += OnKeyDown;
+            root.AddHandler(KeyDownEvent, _keyDownHandler, handledEventsToo: true);
         }
         _ = ViewModel.ReloadAsync();
         Focus(FocusState.Programmatic);
@@ -43,13 +52,20 @@ public sealed partial class TrainerPage : Page
         _tick.Stop();
         if (XamlRoot?.Content is UIElement root)
         {
-            root.KeyDown -= OnKeyDown;
+            root.RemoveHandler(KeyDownEvent, _keyDownHandler);
         }
     }
+
+    private readonly KeyEventHandler _keyDownHandler;
 
     private void OnKeyDown(object sender, KeyRoutedEventArgs e)
     {
         if (e.Key != VirtualKey.Space || XamlRoot is null || FocusManager.GetFocusedElement(XamlRoot) is TextBox)
+        {
+            return;
+        }
+        // Only react once per press even if a control also handled it.
+        if (e.KeyStatus.WasKeyDown)
         {
             return;
         }

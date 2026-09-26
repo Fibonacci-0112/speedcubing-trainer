@@ -50,7 +50,7 @@
                             <Border CornerRadius="10" Padding="8,2" Background="{ThemeResource PrimaryContainerBrush}">
                               <TextBlock Text="{x:Bind StatusText, Mode=OneWay}" FontSize="11" />
                             </Border>
-                            <TextBlock Text="{x:Bind FavoriteGlyph, Mode=OneWay}" FontSize="14" />
+                            <FontIcon Glyph="{x:Bind FavoriteGlyph, Mode=OneWay}" FontSize="14" VerticalAlignment="Center" />
                           </StackPanel>
                           <TextBlock Text="{x:Bind DrillSummary, Mode=OneWay}" FontSize="11" Opacity="0.6" TextWrapping="Wrap" />
                         </StackPanel>

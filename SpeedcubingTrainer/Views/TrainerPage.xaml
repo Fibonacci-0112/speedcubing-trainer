@@ -48,8 +48,8 @@
       <!-- Drill controls -->
       <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center"
                   Visibility="{x:Bind local:TrainerPage.Show(ViewModel.IsDrill), Mode=OneWay}">
-        <Button Content="Start / Next (space)" Command="{x:Bind ViewModel.StartDrillCommand}" Style="{StaticResource FilledButtonStyle}" />
-        <Button Content="Failed" Command="{x:Bind ViewModel.FailDrillCommand}" />
+        <Button Content="Start / Next (space)" Command="{x:Bind ViewModel.StartDrillCommand}" Style="{StaticResource FilledButtonStyle}" IsTabStop="False" />
+        <Button Content="Failed" Command="{x:Bind ViewModel.FailDrillCommand}" IsTabStop="False" />
       </StackPanel>
 
       <!-- Memorize controls -->
@@ -57,17 +57,17 @@
                   Visibility="{x:Bind local:TrainerPage.Show(ViewModel.IsMemorize), Mode=OneWay}">
         <TextBlock Text="{x:Bind ViewModel.QueueText, Mode=OneWay}" TextAlignment="Center" Opacity="0.7" />
         <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
-          <Button Content="Start review" Command="{x:Bind ViewModel.StartMemorizeCommand}" Style="{StaticResource FilledButtonStyle}"
+          <Button Content="Start review" Command="{x:Bind ViewModel.StartMemorizeCommand}" Style="{StaticResource FilledButtonStyle}" IsTabStop="False"
                   Visibility="{x:Bind local:TrainerPage.Collapse(ViewModel.HasCase), Mode=OneWay}" />
-          <Button Content="Show answer (space)" Command="{x:Bind ViewModel.RevealAnswerCommand}"
+          <Button Content="Show answer (space)" Command="{x:Bind ViewModel.RevealAnswerCommand}" IsTabStop="False"
                   Visibility="{x:Bind local:TrainerPage.ShowIf(ViewModel.HasCase, ViewModel.IsAnswerVisible), Mode=OneWay}" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center"
                     Visibility="{x:Bind local:TrainerPage.ShowIf(ViewModel.IsAnswerVisible, ViewModel.IsQuiz), Mode=OneWay}">
-          <Button Content="{x:Bind ViewModel.AgainText, Mode=OneWay}" Command="{x:Bind ViewModel.GradeCommand}" CommandParameter="Again" MinWidth="90" />
-          <Button Content="{x:Bind ViewModel.HardText, Mode=OneWay}" Command="{x:Bind ViewModel.GradeCommand}" CommandParameter="Hard" MinWidth="90" />
-          <Button Content="{x:Bind ViewModel.GoodText, Mode=OneWay}" Command="{x:Bind ViewModel.GradeCommand}" CommandParameter="Good" MinWidth="90" />
-          <Button Content="{x:Bind ViewModel.EasyText, Mode=OneWay}" Command="{x:Bind ViewModel.GradeCommand}" CommandParameter="Easy" MinWidth="90" />
+          <Button Content="{x:Bind ViewModel.AgainText, Mode=OneWay}" Command="{x:Bind ViewModel.GradeCommand}" CommandParameter="Again" MinWidth="90" IsTabStop="False" />
+          <Button Content="{x:Bind ViewModel.HardText, Mode=OneWay}" Command="{x:Bind ViewModel.GradeCommand}" CommandParameter="Hard" MinWidth="90" IsTabStop="False" />
+          <Button Content="{x:Bind ViewModel.GoodText, Mode=OneWay}" Command="{x:Bind ViewModel.GradeCommand}" CommandParameter="Good" MinWidth="90" IsTabStop="False" />
+          <Button Content="{x:Bind ViewModel.EasyText, Mode=OneWay}" Command="{x:Bind ViewModel.GradeCommand}" CommandParameter="Easy" MinWidth="90" IsTabStop="False" />
         </StackPanel>
       </StackPanel>
 
@@ -82,13 +82,13 @@
           </ItemsControl.ItemsPanel>
           <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="vm:QuizChoice">
-              <Button Content="{x:Bind Text}" MinWidth="320" HorizontalAlignment="Stretch" Click="OnChoiceClick" />
+              <Button Content="{x:Bind Text}" MinWidth="320" HorizontalAlignment="Stretch" Click="OnChoiceClick" IsTabStop="False" />
             </DataTemplate>
           </ItemsControl.ItemTemplate>
         </ItemsControl>
         <TextBlock Text="{x:Bind ViewModel.QuizFeedback, Mode=OneWay}" TextAlignment="Center" FontWeight="SemiBold" />
         <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center">
-          <Button Content="Next question (space)" Command="{x:Bind ViewModel.StartQuizCommand}" Style="{StaticResource FilledButtonStyle}" />
+          <Button Content="Next question (space)" Command="{x:Bind ViewModel.StartQuizCommand}" Style="{StaticResource FilledButtonStyle}" IsTabStop="False" />
           <TextBlock Text="{x:Bind ViewModel.ScoreText, Mode=OneWay}" VerticalAlignment="Center" Opacity="0.7" />
         </StackPanel>
       </StackPanel>

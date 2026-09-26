@@ -289,6 +289,12 @@ public sealed partial class TrainerViewModel : ObservableObject
         DrillTimeText = string.Empty;
         QuizFeedback = string.Empty;
         Choices.Clear();
+        StatusText = Mode switch
+        {
+            TrainerMode.Drill => "Choose sets and press Start.",
+            TrainerMode.Memorize => "Review the cases that are due today.",
+            _ => "Press Next question to begin.",
+        };
     }
 
     private void Present(AlgCase c)
