@@ -23,6 +23,9 @@ public sealed partial class TimerPage : Page
     {
         ViewModel = App.Services.GetRequiredService<TimerViewModel>();
         this.InitializeComponent();
+        // Key events only bubble from a focused element, so the page itself must be able to take focus.
+        IsTabStop = true;
+        UseSystemFocusVisuals = false;
         _tick.Tick += (_, _) => ViewModel.Tick();
         Loaded += OnLoaded;
         Unloaded += OnUnloaded;
@@ -55,7 +58,15 @@ public sealed partial class TimerPage : Page
             root.KeyDown += OnKeyDown;
             root.KeyUp += OnKeyUp;
         }
-        Focus(FocusState.Programmatic);
+        TakeFocus();
+    }
+
+    private void TakeFocus()
+    {
+        if (!IsTextInputFocused())
+        {
+            Focus(FocusState.Programmatic);
+        }
     }
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
@@ -115,6 +126,7 @@ public sealed partial class TimerPage : Page
             return;
         }
         _pointerDown = true;
+        TakeFocus();
         TimerSurface.CapturePointer(e.Pointer);
         ViewModel.Press();
         e.Handled = true;

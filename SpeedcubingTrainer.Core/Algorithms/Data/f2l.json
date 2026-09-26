@@ -1,0 +1,391 @@
+{
+  "set": "F2L",
+  "schemaVersion": 1,
+  "view": "FullCube",
+  "colorMode": "Full",
+  "setup": {
+    "preAuf": true,
+    "postAuf": true,
+    "yRotation": false
+  },
+  "groups": [
+    "Basic inserts",
+    "Corner and edge in the top layer, matching colours",
+    "Corner and edge in the top layer, opposite colours",
+    "Corner pointing up",
+    "Edge in the slot",
+    "Corner in the slot",
+    "Both in the slot"
+  ],
+  "cases": [
+    {
+      "id": "F2L-01",
+      "number": 1,
+      "name": "Basic insert (right)",
+      "group": "Basic inserts",
+      "algorithms": [
+        "U R U' R'"
+      ]
+    },
+    {
+      "id": "F2L-02",
+      "number": 2,
+      "name": "Basic insert (front)",
+      "group": "Basic inserts",
+      "algorithms": [
+        "U' F' U F"
+      ]
+    },
+    {
+      "id": "F2L-03",
+      "number": 3,
+      "name": "Pair to the front",
+      "group": "Basic inserts",
+      "algorithms": [
+        "F' U' F"
+      ]
+    },
+    {
+      "id": "F2L-04",
+      "number": 4,
+      "name": "Pair to the right",
+      "group": "Basic inserts",
+      "algorithms": [
+        "R U R'"
+      ]
+    },
+    {
+      "id": "F2L-05",
+      "number": 5,
+      "name": "Split pair, corner right",
+      "group": "Corner and edge in the top layer, matching colours",
+      "algorithms": [
+        "U' R U R' U2 R U' R'"
+      ]
+    },
+    {
+      "id": "F2L-06",
+      "number": 6,
+      "name": "Split pair, corner front",
+      "group": "Corner and edge in the top layer, matching colours",
+      "algorithms": [
+        "d R' U' R U2 R' U R"
+      ]
+    },
+    {
+      "id": "F2L-07",
+      "number": 7,
+      "name": "Edge behind corner, right",
+      "group": "Corner and edge in the top layer, matching colours",
+      "algorithms": [
+        "U' R U2 R' U2 R U' R'"
+      ]
+    },
+    {
+      "id": "F2L-08",
+      "number": 8,
+      "name": "Edge behind corner, front",
+      "group": "Corner and edge in the top layer, matching colours",
+      "algorithms": [
+        "d R' U2 R U2 R' U R"
+      ]
+    },
+    {
+      "id": "F2L-09",
+      "number": 9,
+      "name": "Edge ahead, corner right",
+      "group": "Corner and edge in the top layer, opposite colours",
+      "algorithms": [
+        "U' R U' R' U y' R' U' R"
+      ]
+    },
+    {
+      "id": "F2L-10",
+      "number": 10,
+      "name": "Edge ahead, corner front",
+      "group": "Corner and edge in the top layer, opposite colours",
+      "algorithms": [
+        "U' R U R' U R U R'"
+      ]
+    },
+    {
+      "id": "F2L-11",
+      "number": 11,
+      "name": "Edge far, corner right",
+      "group": "Corner and edge in the top layer, opposite colours",
+      "algorithms": [
+        "U' R U2 R' U y' R' U' R"
+      ]
+    },
+    {
+      "id": "F2L-12",
+      "number": 12,
+      "name": "Edge far, corner front",
+      "group": "Corner and edge in the top layer, opposite colours",
+      "algorithms": [
+        "R' U2 R2 U R2 U R"
+      ]
+    },
+    {
+      "id": "F2L-13",
+      "number": 13,
+      "name": "Edge beside corner, right",
+      "group": "Corner and edge in the top layer, opposite colours",
+      "algorithms": [
+        "d R' U R U' R' U' R"
+      ]
+    },
+    {
+      "id": "F2L-14",
+      "number": 14,
+      "name": "Edge beside corner, front",
+      "group": "Corner and edge in the top layer, opposite colours",
+      "algorithms": [
+        "U' R U' R' U R U R'"
+      ]
+    },
+    {
+      "id": "F2L-15",
+      "number": 15,
+      "name": "Corner white right, edge in UR flipped",
+      "group": "Corner and edge in the top layer, opposite colours",
+      "algorithms": [
+        "R U' R' U2 F' U' F"
+      ]
+    },
+    {
+      "id": "F2L-16",
+      "number": 16,
+      "name": "Corner white up, edge in UR flipped",
+      "group": "Corner pointing up",
+      "algorithms": [
+        "U2 F2 U2 F U F' U F2"
+      ]
+    },
+    {
+      "id": "F2L-17",
+      "number": 17,
+      "name": "Corner up, edge right",
+      "group": "Corner pointing up",
+      "algorithms": [
+        "R U2 R' U' R U R'"
+      ]
+    },
+    {
+      "id": "F2L-18",
+      "number": 18,
+      "name": "Corner up, edge front",
+      "group": "Corner pointing up",
+      "algorithms": [
+        "y' R' U2 R U R' U' R"
+      ]
+    },
+    {
+      "id": "F2L-19",
+      "number": 19,
+      "name": "Corner up, edge far right",
+      "group": "Corner pointing up",
+      "algorithms": [
+        "U R U2 R' U R U' R'"
+      ]
+    },
+    {
+      "id": "F2L-20",
+      "number": 20,
+      "name": "Corner up, edge far front",
+      "group": "Corner pointing up",
+      "algorithms": [
+        "y' U' R' U2 R U' R' U R"
+      ]
+    },
+    {
+      "id": "F2L-21",
+      "number": 21,
+      "name": "Corner up, edge beside",
+      "group": "Corner pointing up",
+      "algorithms": [
+        "U2 R U R' U R U' R'"
+      ]
+    },
+    {
+      "id": "F2L-22",
+      "number": 22,
+      "name": "Corner up, edge flipped beside",
+      "group": "Corner pointing up",
+      "algorithms": [
+        "y' U2 R' U' R U' R' U R"
+      ]
+    },
+    {
+      "id": "F2L-23",
+      "number": 23,
+      "name": "Corner up, edge flipped right",
+      "group": "Corner pointing up",
+      "algorithms": [
+        "U R U' R' U' R U' R' U R U' R'"
+      ]
+    },
+    {
+      "id": "F2L-24",
+      "number": 24,
+      "name": "Corner up, edge flipped front",
+      "group": "Corner pointing up",
+      "algorithms": [
+        "U' F' U F U F' U2 F"
+      ]
+    },
+    {
+      "id": "F2L-25",
+      "number": 25,
+      "name": "Edge in slot, corner right up",
+      "group": "Edge in the slot",
+      "algorithms": [
+        "U' R' F R F' R U R'"
+      ]
+    },
+    {
+      "id": "F2L-26",
+      "number": 26,
+      "name": "Edge in slot, corner front up",
+      "group": "Edge in the slot",
+      "algorithms": [
+        "U R U' R' F R' F' R"
+      ]
+    },
+    {
+      "id": "F2L-27",
+      "number": 27,
+      "name": "Edge in slot, corner right",
+      "group": "Edge in the slot",
+      "algorithms": [
+        "R U' R' U R U' R'"
+      ]
+    },
+    {
+      "id": "F2L-28",
+      "number": 28,
+      "name": "Edge in slot, corner front",
+      "group": "Edge in the slot",
+      "algorithms": [
+        "y' R' U R U' R' U R"
+      ]
+    },
+    {
+      "id": "F2L-29",
+      "number": 29,
+      "name": "Edge flipped in slot, corner right",
+      "group": "Edge in the slot",
+      "algorithms": [
+        "R' F R F' U R U' R'"
+      ]
+    },
+    {
+      "id": "F2L-30",
+      "number": 30,
+      "name": "Corner white right, edge flipped in slot",
+      "group": "Edge in the slot",
+      "algorithms": [
+        "U F' U' F U' R U R'"
+      ]
+    },
+    {
+      "id": "F2L-31",
+      "number": 31,
+      "name": "Corner in slot, edge up",
+      "group": "Corner in the slot",
+      "algorithms": [
+        "U' R' F R F' R U' R'"
+      ]
+    },
+    {
+      "id": "F2L-32",
+      "number": 32,
+      "name": "Corner in slot, edge flipped",
+      "group": "Corner in the slot",
+      "algorithms": [
+        "U R U' R' U R U' R' U R U' R'"
+      ]
+    },
+    {
+      "id": "F2L-33",
+      "number": 33,
+      "name": "Corner twisted right, edge up",
+      "group": "Corner in the slot",
+      "algorithms": [
+        "U' R U' R' U2 R U' R'"
+      ]
+    },
+    {
+      "id": "F2L-34",
+      "number": 34,
+      "name": "Corner twisted white front, edge in UR",
+      "group": "Corner in the slot",
+      "algorithms": [
+        "R U R' U' R U R'"
+      ]
+    },
+    {
+      "id": "F2L-35",
+      "number": 35,
+      "name": "Corner white front, edge in UF",
+      "group": "Corner and edge in the top layer, opposite colours",
+      "algorithms": [
+        "F' U F U2 R U R'"
+      ]
+    },
+    {
+      "id": "F2L-36",
+      "number": 36,
+      "name": "Corner white front, edge flipped in slot",
+      "group": "Edge in the slot",
+      "algorithms": [
+        "U2 R U R' U2 F' U2 F"
+      ]
+    },
+    {
+      "id": "F2L-37",
+      "number": 37,
+      "name": "Solved pair, edge flipped",
+      "group": "Both in the slot",
+      "algorithms": [
+        "R2 U2 F R2 F' U2 R' U R'"
+      ]
+    },
+    {
+      "id": "F2L-38",
+      "number": 38,
+      "name": "Corner twisted right, edge in place",
+      "group": "Both in the slot",
+      "algorithms": [
+        "R U' R' U R U2 R' U R U' R'"
+      ]
+    },
+    {
+      "id": "F2L-39",
+      "number": 39,
+      "name": "Corner twisted white right, edge flipped in slot",
+      "group": "Both in the slot",
+      "algorithms": [
+        "F' U F R U' R' U2 R U R'"
+      ]
+    },
+    {
+      "id": "F2L-40",
+      "number": 40,
+      "name": "Corner twisted front, edge in place",
+      "group": "Both in the slot",
+      "algorithms": [
+        "R U R' U' R U' R' U2 y' R' U' R"
+      ]
+    },
+    {
+      "id": "F2L-41",
+      "number": 41,
+      "name": "Corner twisted front, edge flipped",
+      "group": "Both in the slot",
+      "algorithms": [
+        "R U' R' U' R U R' U2 R U' R'"
+      ]
+    }
+  ]
+}

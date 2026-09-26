@@ -15,4 +15,8 @@
     <InternalsVisibleTo Include="SpeedcubingTrainer.Core.Tests" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Algorithms/Data/*.json" LogicalName="algsets/%(Filename)%(Extension)" />
+  </ItemGroup>
+
 </Project>

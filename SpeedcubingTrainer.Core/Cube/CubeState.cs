@@ -117,6 +117,55 @@ public sealed class CubeState : IEquatable<CubeState>
         throw new InvalidCubeException("The centres do not form a valid colour scheme.");
     }
 
+    /// <summary>
+    /// Rotates the cube (with x or z rotations only) so that the U centre is on top, keeping any y rotation.
+    /// This is how a cuber holds the cube after an algorithm that ends in a y rotation.
+    /// </summary>
+    public CubeState NormalizeUpFace()
+    {
+        var upCentreLocation = 0;
+        for (var face = 0; face < 6; face++)
+        {
+            if (_facelets[CenterIndices[face]] == Face.U)
+            {
+                upCentreLocation = face;
+                break;
+            }
+        }
+        return (Face)upCentreLocation switch
+        {
+            Face.U => this,
+            Face.D => Apply(new Move(MoveTarget.X, Turn.Double)),
+            Face.F => Apply(new Move(MoveTarget.X, Turn.Cw)),
+            Face.B => Apply(new Move(MoveTarget.X, Turn.Ccw)),
+            Face.R => Apply(new Move(MoveTarget.Z, Turn.Ccw)),
+            _ => Apply(new Move(MoveTarget.Z, Turn.Cw)),
+        };
+    }
+
+    /// <summary>
+    /// Relabels colours so that every centre shows its home colour, without moving any sticker.
+    /// Used to present a case in the standard colour scheme regardless of how the cube is turned.
+    /// </summary>
+    public CubeState RecolorToHome()
+    {
+        if (HasHomeOrientation)
+        {
+            return this;
+        }
+        var map = new Face[6];
+        for (var face = 0; face < 6; face++)
+        {
+            map[(int)_facelets[CenterIndices[face]]] = (Face)face;
+        }
+        var result = new Face[FaceletCount];
+        for (var i = 0; i < FaceletCount; i++)
+        {
+            result[i] = map[(int)_facelets[i]];
+        }
+        return new CubeState(result);
+    }
+
     /// <summary>Converts to the cubie model. The cube is first rotated to its home orientation.</summary>
     public CubieCube ToCubieCube() => CubieCube.FromFacelets(NormalizeOrientation()._facelets);
 
