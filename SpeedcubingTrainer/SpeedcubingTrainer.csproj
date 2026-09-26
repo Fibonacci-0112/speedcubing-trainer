@@ -21,6 +21,7 @@
       UnoFeatures are used to quickly add and manage features enabled for your app.
       https://aka.platform.uno/singleproject-features
     -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <UnoFeatures>
       Material;
       Hosting;

@@ -6,11 +6,14 @@ namespace SpeedcubingTrainer.Core.Persistence;
 /// temporary file when the target is missing or empty, so an interrupted write never loses the
 /// previous good copy.
 /// </summary>
-public sealed class FileAppStorage(string rootDirectory) : IAppStorage, IBlobStorage
+public sealed class FileAppStorage(string rootDirectory, Action? afterWrite = null) : IAppStorage, IBlobStorage
 {
     private const string TempSuffix = ".tmp";
 
     public string RootDirectory { get; } = Path.GetFullPath(rootDirectory);
+
+    /// <summary>Hook invoked after every write or delete, e.g. to flush an in-memory file system to durable storage.</summary>
+    private readonly Action? _afterWrite = afterWrite;
 
     public async Task<string?> ReadTextAsync(string name, CancellationToken cancellationToken = default)
     {
@@ -32,6 +35,7 @@ public sealed class FileAppStorage(string rootDirectory) : IAppStorage, IBlobSto
         var path = Resolve(name);
         File.Delete(path);
         File.Delete(path + TempSuffix);
+        _afterWrite?.Invoke();
         return Task.CompletedTask;
     }
 
@@ -74,6 +78,7 @@ public sealed class FileAppStorage(string rootDirectory) : IAppStorage, IBlobSto
             await stream.FlushAsync(cancellationToken).ConfigureAwait(false);
         }
         File.Move(temp, path, overwrite: true);
+        _afterWrite?.Invoke();
     }
 
     private static async Task<byte[]?> TryReadAsync(string path, CancellationToken cancellationToken)
