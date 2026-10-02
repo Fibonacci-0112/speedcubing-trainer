@@ -15,6 +15,9 @@ public sealed partial class CaseView : UserControl
     public static readonly DependencyProperty SizeProperty = DependencyProperty.Register(
         nameof(Size), typeof(double), typeof(CaseView), new PropertyMetadata(96.0, (d, _) => ((CaseView)d).Refresh()));
 
+    public static readonly DependencyProperty ShowArrowsProperty = DependencyProperty.Register(
+        nameof(ShowArrows), typeof(bool), typeof(CaseView), new PropertyMetadata(true, (d, _) => ((CaseView)d).Refresh()));
+
     private readonly TopFaceView _top = new();
     private readonly IsometricCubeView _iso = new();
     private readonly Grid _root = new();
@@ -48,6 +51,13 @@ public sealed partial class CaseView : UserControl
         set => SetValue(SizeProperty, value);
     }
 
+    /// <summary>Whether PLL diagrams show the piece-movement arrows (hidden while the trainer quizzes).</summary>
+    public bool ShowArrows
+    {
+        get => (bool)GetValue(ShowArrowsProperty);
+        set => SetValue(ShowArrowsProperty, value);
+    }
+
     private void Refresh()
     {
         var c = Case;
@@ -59,6 +69,7 @@ public sealed partial class CaseView : UserControl
         _top.Size = Size;
         _iso.State = state;
         _top.State = state;
+        _top.ShowArrows = ShowArrows;
         _top.ColorMode = c?.Set == AlgorithmSetKind.OLL ? CaseColorMode.OrientationOnly : CaseColorMode.Full;
     }
 }

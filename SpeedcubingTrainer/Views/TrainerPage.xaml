@@ -32,6 +32,7 @@
       <Grid x:Name="CaseSurface" Grid.Row="1" Background="Transparent" PointerPressed="OnSurfacePressed" MinHeight="260">
         <StackPanel HorizontalAlignment="Center" Spacing="10">
           <controls:CaseView Case="{x:Bind ViewModel.CurrentCase, Mode=OneWay}" State="{x:Bind ViewModel.CurrentState, Mode=OneWay}" Size="220"
+                             ShowArrows="{x:Bind ViewModel.IsAnswerVisible, Mode=OneWay}"
                              Visibility="{x:Bind local:TrainerPage.Show(ViewModel.HasCase), Mode=OneWay}" />
           <TextBlock Text="{x:Bind ViewModel.DrillTimeText, Mode=OneWay}" FontSize="48" FontWeight="Light" TextAlignment="Center"
                      Visibility="{x:Bind local:TrainerPage.Show(ViewModel.IsDrill), Mode=OneWay}" />
