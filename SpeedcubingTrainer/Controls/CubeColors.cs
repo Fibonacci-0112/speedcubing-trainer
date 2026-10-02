@@ -25,6 +25,19 @@ public static class CubeColors
         _ => Grey,
     };
 
+    /// <summary>
+    /// The colours of a cube held yellow-up with green in front, as last-layer diagrams are drawn:
+    /// the white-up scheme turned over, so U and D swap colours and so do R and L.
+    /// </summary>
+    public static Color ForYellowTop(Face face) => face switch
+    {
+        Face.U => Yellow,
+        Face.D => White,
+        Face.R => Orange,
+        Face.L => Red,
+        _ => For(face),
+    };
+
     private static readonly Dictionary<Color, SolidColorBrush> Brushes = new();
 
     public static SolidColorBrush Brush(Color color)
