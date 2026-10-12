@@ -43,6 +43,59 @@ public class AlgorithmParserTests
         Assert.False(Algorithm.TryParse(input, out _));
     }
 
+    [Theory]
+    [InlineData("((R)100)100", 10_000)]
+    [InlineData("[(R)100]100 ()100 (U)0", 10_000)]
+    [InlineData("((R)100)99 (U)99 F", 10_000)]
+    [InlineData("(R)0 U", 1)]
+    public void AcceptsExpansionWithinBudget(string input, int count)
+    {
+        Assert.Equal(count, Algorithm.Parse(input).Count);
+    }
+
+    [Theory]
+    [InlineData("(((R)100)100)100", 0)]
+    [InlineData("[[(R)100]100]100", 0)]
+    [InlineData("((R)100)100 U", 12)]
+    [InlineData("U ((R)100)100", 2)]
+    [InlineData("((R)100)100 (U)", 12)]
+    [InlineData("(((R)100)100 U)0", 13)]
+    [InlineData("(R)101", 3)]
+    [InlineData("(R)999999999999999999999", 3)]
+    public void RejectsExcessiveExpansionWithNormalParseFailure(string input, int position)
+    {
+        AssertParseFailure(input, position);
+    }
+
+    [Fact]
+    public void BoundsFlatSequences()
+    {
+        var input = string.Join(" ", Enumerable.Repeat("R", 10_000));
+        Assert.Equal(10_000, Algorithm.Parse(input).Count);
+        AssertParseFailure(input + " U", input.Length + 1);
+    }
+
+    [Theory]
+    [InlineData('(', ')')]
+    [InlineData('[', ']')]
+    public void BoundsNestingBeforeRecursing(char open, char close)
+    {
+        Assert.Equal("R", Algorithm.Parse(new string(open, 32) + "R" + new string(close, 32)).ToString());
+        AssertParseFailure(new string(open, 33) + "R" + new string(close, 33), 32);
+        AssertParseFailure(new string(open, 10_000), 32);
+    }
+
+    private static void AssertParseFailure(string input, int position)
+    {
+        var ex = Assert.Throws<AlgorithmParseException>(() => Algorithm.Parse(input));
+        Assert.Equal(position, ex.Position);
+        Assert.False(Algorithm.TryParse(input, out var algorithm, out var error, out var errorPosition));
+        Assert.Same(Algorithm.Empty, algorithm);
+        Assert.NotEmpty(error);
+        Assert.Equal(position, errorPosition);
+        Assert.False(Algorithm.TryParse(input, out _));
+    }
+
     [Fact]
     public void LowercaseStyleWritesWideMovesAsLowercase()
     {

@@ -9,6 +9,18 @@ public class AlgorithmDataTests(ITestOutputHelper output)
 {
     private static readonly Move[] UTurns = [new(MoveTarget.U, Turn.Cw), new(MoveTarget.U, Turn.Double), new(MoveTarget.U, Turn.Ccw)];
 
+    [Fact]
+    public void StreamLoaderRejectsExcessiveAlgorithmExpansion()
+    {
+        using var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes("""
+            {"set":"PLL","cases":[{"id":"oversized","algorithms":["(((R)100)100)100"]}]}
+            """));
+
+        var ex = Assert.Throws<FormatException>(() => AlgorithmSetLoader.Parse(stream));
+        Assert.Contains("Case oversized", ex.Message);
+        Assert.IsType<AlgorithmParseException>(ex.InnerException);
+    }
+
     [Theory]
     [InlineData(AlgorithmSetKind.F2L, 41)]
     [InlineData(AlgorithmSetKind.OLL, 57)]
