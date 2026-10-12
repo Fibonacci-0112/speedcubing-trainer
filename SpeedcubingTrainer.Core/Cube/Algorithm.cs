@@ -99,6 +99,9 @@ public sealed class Algorithm : IReadOnlyList<Move>, IEquatable<Algorithm>
         return new Algorithm([.. stack], true);
     }
 
+    /// <summary>
+    /// Parses notation with at most 10,000 expanded moves per sequence and 32 nested groups.
+    /// </summary>
     public static Algorithm Parse(string text)
     {
         return TryParse(text, out var algorithm, out var error, out var position)
@@ -161,6 +164,9 @@ public sealed class Algorithm : IReadOnlyList<Move>, IEquatable<Algorithm>
     /// </summary>
     private ref struct Parser(string text)
     {
+        private const int MaxExpandedMoves = 10_000;
+        private const int MaxNestingDepth = 32;
+
         private readonly string _text = text;
         private int _pos;
 
@@ -171,7 +177,7 @@ public sealed class Algorithm : IReadOnlyList<Move>, IEquatable<Algorithm>
             errorPosition = -1;
             try
             {
-                ParseSequence(moves, closing: null, openPosition: 0);
+                ParseSequence(moves, closing: null, openPosition: 0, depth: 0);
                 return true;
             }
             catch (AlgorithmParseException ex)
@@ -182,7 +188,7 @@ public sealed class Algorithm : IReadOnlyList<Move>, IEquatable<Algorithm>
             }
         }
 
-        private void ParseSequence(List<Move> output, char? closing, int openPosition)
+        private void ParseSequence(List<Move> output, char? closing, int openPosition, int depth)
         {
             while (true)
             {
@@ -210,10 +216,16 @@ public sealed class Algorithm : IReadOnlyList<Move>, IEquatable<Algorithm>
                 if (c is '(' or '[')
                 {
                     var start = _pos;
+                    if (depth >= MaxNestingDepth)
+                    {
+                        throw new AlgorithmParseException("Group nesting is too deep", start);
+                    }
                     _pos++;
                     var inner = new List<Move>();
-                    ParseSequence(inner, c == '(' ? ')' : ']', start);
+                    ParseSequence(inner, c == '(' ? ')' : ']', start, depth + 1);
                     var repeat = ParseRepeatSuffix();
+                    // Widen before multiplying so the size check cannot overflow.
+                    CheckMoveBudget(output, (long)inner.Count * repeat, start);
                     for (var i = 0; i < repeat; i++)
                     {
                         output.AddRange(inner);
@@ -221,7 +233,16 @@ public sealed class Algorithm : IReadOnlyList<Move>, IEquatable<Algorithm>
                     continue;
                 }
 
+                CheckMoveBudget(output, 1, _pos);
                 output.Add(ParseMove());
+            }
+        }
+
+        private static void CheckMoveBudget(List<Move> output, long additionalMoves, int position)
+        {
+            if (additionalMoves > MaxExpandedMoves - output.Count)
+            {
+                throw new AlgorithmParseException("Expanded move count is too large", position);
             }
         }
 
@@ -242,8 +263,7 @@ public sealed class Algorithm : IReadOnlyList<Move>, IEquatable<Algorithm>
             {
                 return 1;
             }
-            var count = int.Parse(_text.AsSpan(start, _pos - start));
-            if (count > 100)
+            if (!int.TryParse(_text.AsSpan(start, _pos - start), out var count) || count > 100)
             {
                 throw new AlgorithmParseException("Repeat count is too large", start);
             }
