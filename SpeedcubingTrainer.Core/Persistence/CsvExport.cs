@@ -27,8 +27,19 @@ public static class CsvExport
         return sb.ToString();
     }
 
-    private static string Quote(string value) =>
-        value.Contains(',') || value.Contains('"') || value.Contains('\n')
+    private static string Quote(string value)
+    {
+        // CSV quoting alone does not prevent spreadsheet formula evaluation.
+        // Protect leading whitespace/controls too: consumers may skip them.
+        var needsTextPrefix = value.Length > 0 &&
+            (value[0] is '=' or '+' or '-' or '@' or '＝' or '＋' or '－' or '＠' ||
+             char.IsWhiteSpace(value[0]) || char.IsControl(value[0]));
+        if (needsTextPrefix)
+        {
+            value = "'" + value;
+        }
+        return needsTextPrefix || value.Contains(',') || value.Contains('"') || value.Contains('\n') || value.Contains('\r')
             ? "\"" + value.Replace("\"", "\"\"") + "\""
             : value;
+    }
 }
